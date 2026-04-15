@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# B2B Exhibitions Web App Demo (ExpoFlow)
 
-## Getting Started
+Modern, responsive Next.js (App Router) + Tailwind CSS demo for B2B exhibitions.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Implemented pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` Landing page
+- `/exhibitor-dashboard` Exhibitor dashboard demo
+- `/visitor-experience` Visitor discovery + meeting request demo
+- `/admin-dashboard` Organizer/admin dashboard demo
+- `/pricing` SaaS pricing tiers
+- `/contact` Demo request form (CRM handler placeholder)
+- `/login` Fake role-based login navigation
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```text
+src/
+  app/
+    admin-dashboard/
+    contact/
+    exhibitor-dashboard/
+    login/
+    pricing/
+    visitor-experience/
+    globals.css
+    layout.tsx
+    page.tsx
+  components/
+    booth-grid.tsx
+    contact-form.tsx
+    footer.tsx
+    leads-table.tsx
+    navbar.tsx
+    theme-toggle.tsx
+    visitor-directory.tsx
+  data/
+    mock-data.ts
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Quality checks
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+npm run build
+```
