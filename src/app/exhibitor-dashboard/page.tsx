@@ -15,11 +15,19 @@ export default function ExhibitorDashboardPage() {
     <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
       <aside className="rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
         <h1 className="mb-4 text-lg font-semibold text-zinc-900 dark:text-zinc-100">Exhibitor Dashboard</h1>
-        <nav className="space-y-2">
-          {sidebarItems.map((item) => (
-            <p key={item} className="rounded-lg px-3 py-2 text-sm text-zinc-600 first:bg-zinc-900 first:text-white dark:text-zinc-300 dark:first:bg-zinc-100 dark:first:text-zinc-900">
+        <nav className="space-y-2" aria-label="Exhibitor sections">
+          {sidebarItems.map((item, index) => (
+            <button
+              key={item}
+              type="button"
+              className={`w-full rounded-lg px-3 py-2 text-left text-sm ${
+                index === 0
+                  ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+                  : "text-zinc-600 dark:text-zinc-300"
+              }`}
+            >
               {item}
-            </p>
+            </button>
           ))}
         </nav>
       </aside>

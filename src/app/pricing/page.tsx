@@ -16,25 +16,32 @@ export default function PricingPage() {
       </div>
 
       <section className="grid gap-4 md:grid-cols-3">
-        {pricingTiers.map((tier) => (
-          <article
-            key={tier.name}
-            className={`rounded-2xl border p-6 ${
-              tier.popular
-                ? "border-sky-500 bg-sky-50 dark:bg-sky-900/30"
-                : "border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
-            }`}
-          >
-            <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{tier.name}</p>
-            <p className="mt-3 text-3xl font-bold text-zinc-900 dark:text-zinc-100">{tier.price}<span className="text-sm font-medium text-zinc-500 dark:text-zinc-400">{tier.price === "Custom" ? "" : "/mo"}</span></p>
-            <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">{tier.description}</p>
-            <ul className="mt-4 space-y-2 text-sm text-zinc-700 dark:text-zinc-200">
-              {tier.features.map((feature) => (
-                <li key={feature}>• {feature}</li>
-              ))}
-            </ul>
-          </article>
-        ))}
+        {pricingTiers.map((tier) => {
+          const priceSuffix = tier.price === "Custom" ? "" : "/mo";
+
+          return (
+            <article
+              key={tier.name}
+              className={`rounded-2xl border p-6 ${
+                tier.popular
+                  ? "border-sky-500 bg-sky-50 dark:bg-sky-900/30"
+                  : "border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
+              }`}
+            >
+              <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{tier.name}</p>
+              <p className="mt-3 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
+                {tier.price}
+                <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400">{priceSuffix}</span>
+              </p>
+              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">{tier.description}</p>
+              <ul className="mt-4 space-y-2 text-sm text-zinc-700 dark:text-zinc-200">
+                {tier.features.map((feature) => (
+                  <li key={feature}>• {feature}</li>
+                ))}
+              </ul>
+            </article>
+          );
+        })}
       </section>
     </div>
   );

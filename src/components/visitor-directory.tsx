@@ -1,21 +1,25 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { exhibitors } from "@/data/mock-data";
+
+const industries = ["All", ...new Set(exhibitors.map((item) => item.industry))];
 
 export default function VisitorDirectory() {
   const [query, setQuery] = useState("");
   const [industry, setIndustry] = useState("All");
   const [booked, setBooked] = useState<string[]>([]);
 
-  const industries = useMemo(() => ["All", ...new Set(exhibitors.map((item) => item.industry))], []);
-
   const filteredExhibitors = exhibitors.filter((item) => {
     const matchesQuery = `${item.name} ${item.shortDescription}`.toLowerCase().includes(query.toLowerCase());
     const matchesIndustry = industry === "All" || item.industry === industry;
     return matchesQuery && matchesIndustry;
   });
+
+  const handleBookMeeting = (id: string) => {
+    setBooked((prev) => (prev.includes(id) ? prev : [...prev, id]));
+  };
 
   return (
     <section className="space-y-5">
@@ -51,11 +55,13 @@ export default function VisitorDirectory() {
           return (
             <article key={item.id} className="rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
               <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">{item.name}</h3>
-              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{item.industry} · {item.location}</p>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                {item.industry} · {item.location}
+              </p>
               <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">{item.shortDescription}</p>
               <button
                 type="button"
-                onClick={() => setBooked((prev) => (prev.includes(item.id) ? prev : [...prev, item.id]))}
+                onClick={() => handleBookMeeting(item.id)}
                 className={`mt-4 w-full rounded-xl px-3 py-2 text-sm font-semibold transition ${
                   isBooked
                     ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200"

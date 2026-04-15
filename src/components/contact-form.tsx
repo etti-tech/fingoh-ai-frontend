@@ -1,9 +1,16 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 export default function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const successMessageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isSubmitted) {
+      successMessageRef.current?.focus();
+    }
+  }, [isSubmitted]);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,7 +41,11 @@ export default function ContactForm() {
       <button type="submit" className="w-full rounded-xl bg-zinc-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300">
         Submit Request
       </button>
-      {isSubmitted ? <p className="text-sm text-emerald-600 dark:text-emerald-300">Thanks! Demo request captured. CRM integration hook is ready for implementation.</p> : null}
+      {isSubmitted ? (
+        <div ref={successMessageRef} tabIndex={-1} role="status" aria-live="polite" className="text-sm text-emerald-600 outline-none dark:text-emerald-300">
+          Thanks! Demo request captured. CRM integration hook is ready for implementation.
+        </div>
+      ) : null}
     </form>
   );
 }

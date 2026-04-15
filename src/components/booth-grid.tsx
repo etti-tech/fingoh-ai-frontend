@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { booths } from "@/data/mock-data";
 
+const firstAvailableBooth = booths.find((booth) => booth.status === "available")?.id ?? null;
+
 export default function BoothGrid() {
-  const firstAvailable = useMemo(() => booths.find((booth) => booth.status === "available")?.id ?? null, []);
-  const [selectedBooth, setSelectedBooth] = useState<string | null>(firstAvailable);
+  const [selectedBooth, setSelectedBooth] = useState<string | null>(firstAvailableBooth);
 
   return (
     <section className="space-y-4 rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
