@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 
+import { AuthProvider } from "@/components/auth-context";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import "./globals.css";
@@ -14,16 +15,16 @@ const themeInitScript = `(() => {
   } catch {}
 })();`;
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://expoflow-demo.vercel.app";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://ettiexpo.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "ExpoFlow | B2B Exhibitions Platform Demo",
-    template: "%s | ExpoFlow",
+    default: "EttiExpo | B2B Trade Fair & Exhibition Platform",
+    template: "%s | EttiExpo",
   },
-  description: "Modern B2B exhibitions web app demo for organizers, exhibitors, and visitors.",
-  keywords: ["B2B exhibitions", "event technology", "booth booking", "lead capture", "expo SaaS"],
+  description: "EttiExpo is a trade fair organiser platform where exhibitors, visitors, sponsors and vendors collaborate to run world-class B2B exhibitions and trade fairs.",
+  keywords: ["trade fair", "B2B exhibitions", "trade fair organiser", "booth booking", "exhibition platform", "expo SaaS", "event management"],
 };
 
 export default function RootLayout({
@@ -37,9 +38,11 @@ export default function RootLayout({
         <Script id="theme-init" strategy="beforeInteractive">
           {themeInitScript}
         </Script>
-        <Navbar />
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 lg:px-8">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 lg:px-8">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );
