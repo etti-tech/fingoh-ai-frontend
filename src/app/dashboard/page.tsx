@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth-context";
 import EventModal from "@/components/event-modal";
-import type { MockEvent } from "@/data/mock-data";
-import { mockEvents as initialEvents } from "@/data/mock-data";
+import BoothBookingModal from "@/components/booth-booking-modal";
+import type { MockEvent, ExhibitorBooking } from "@/data/mock-data";
+import { mockEvents as initialEvents, mockExhibitorBookings } from "@/data/mock-data";
 
 const statusColors: Record<MockEvent["status"], string> = {
   upcoming: "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300",
@@ -22,6 +23,213 @@ const statusDot: Record<MockEvent["status"], string> = {
 };
 
 export default function DashboardPage() {
+  const { user } = useAuth();
+
+  if (user?.role === "exhibitor") return <ExhibitorDashboard />;
+  return <OrganiserDashboard />;
+}
+
+/* ─── Exhibitor Dashboard ─── */
+
+function ExhibitorDashboard() {
+  const { user } = useAuth();
+  const router = useRouter();
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [bookingEventId, setBookingEventId] = useState<string | null>(null);
+  const [bookings, setBookings] = useState<ExhibitorBooking[]>(mockExhibitorBookings);
+  const [tab, setTab] = useState<"upcoming" | "completed">("upcoming");
+
+  const userBookings = bookings.filter((b) => b.userId === user?.id);
+  const confirmedEventIds = new Set(userBookings.filter((b) => b.status === "confirmed").map((b) => b.eventId));
+
+  const upcomingEvents = initialEvents.filter((e) => e.status === "upcoming" || e.status === "live");
+  const completedEvents = initialEvents.filter((e) => e.status === "completed");
+  const displayEvents = tab === "upcoming" ? upcomingEvents : completedEvents;
+
+  const stats = [
+    { label: "Upcoming Events", value: upcomingEvents.length, color: "text-blue-600 dark:text-blue-400" },
+    { label: "Active Bookings", value: userBookings.filter((b) => b.status === "confirmed" || b.status === "approved").length, color: "text-emerald-600 dark:text-emerald-400" },
+    { label: "Pending Approvals", value: userBookings.filter((b) => b.status === "pending").length, color: "text-amber-600 dark:text-amber-400" },
+    { label: "Completed Events", value: completedEvents.length, color: "text-zinc-500" },
+  ];
+
+  const handleBookingSubmit = (booking: ExhibitorBooking) => {
+    setBookings((prev) => [booking, ...prev]);
+    setBookingModalOpen(false);
+    setBookingEventId(null);
+  };
+
+  const getBookingForEvent = (eventId: string) => userBookings.find((b) => b.eventId === eventId);
+
+  const bookingStatusBadge: Record<string, string> = {
+    pending: "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300",
+    approved: "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300",
+    confirmed: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
+    rejected: "bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-300",
+    payment_pending: "bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300",
+    cancelled: "bg-zinc-100 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300",
+  };
+
+  return (
+    <div className="mx-auto max-w-6xl">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+          Welcome back, {user?.name?.split(" ")[0]}
+        </h1>
+        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+          Browse events, book booths and manage your exhibition presence
+        </p>
+      </div>
+
+      {/* Stats */}
+      <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {stats.map((s) => (
+          <div key={s.label} className="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">{s.label}</p>
+            <p className={`mt-1 text-2xl font-bold ${s.color}`}>{s.value}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Tabs */}
+      <div className="mt-6 flex gap-2">
+        {(["upcoming", "completed"] as const).map((t) => (
+          <button
+            key={t}
+            type="button"
+            onClick={() => setTab(t)}
+            className={`rounded-lg px-3.5 py-1.5 text-sm font-medium transition ${
+              tab === t
+                ? "bg-indigo-600 text-white shadow-sm"
+                : "bg-white text-zinc-600 hover:bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+            }`}
+          >
+            {t.charAt(0).toUpperCase() + t.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      {/* Event cards */}
+      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {displayEvents.map((evt) => {
+          const booking = getBookingForEvent(evt.id);
+          const isConfirmed = confirmedEventIds.has(evt.id);
+
+          return (
+            <div key={evt.id} className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
+              {/* Gradient header */}
+              <div className={`relative h-32 bg-gradient-to-br ${evt.image}`}>
+                <div className="absolute inset-0 bg-black/10" />
+                <span className={`absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${statusColors[evt.status]}`}>
+                  <span className={`h-1.5 w-1.5 rounded-full ${statusDot[evt.status]}`} />
+                  {evt.status.charAt(0).toUpperCase() + evt.status.slice(1)}
+                </span>
+                {booking && (
+                  <span className={`absolute right-3 top-3 rounded-full px-2.5 py-1 text-xs font-semibold ${bookingStatusBadge[booking.status]}`}>
+                    {booking.status.replace("_", " ").charAt(0).toUpperCase() + booking.status.replace("_", " ").slice(1)}
+                  </span>
+                )}
+              </div>
+
+              {/* Card body */}
+              <div className="p-4">
+                <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-50">{evt.title}</h3>
+                <p className="mt-1 line-clamp-2 text-sm text-zinc-500 dark:text-zinc-400">{evt.description}</p>
+
+                <div className="mt-3 flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                  </svg>
+                  {evt.venue}, {evt.city}
+                </div>
+
+                <div className="mt-1 flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                  </svg>
+                  {new Date(evt.startDate).toLocaleDateString("en-GB", { day: "numeric", month: "short" })} – {new Date(evt.endDate).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                </div>
+
+                {/* Metrics row */}
+                <div className="mt-4 flex items-center justify-between border-t border-zinc-100 pt-3 dark:border-zinc-800">
+                  <MetricPill label="Booths" value={evt.booths} />
+                  <MetricPill label="Exhibitors" value={evt.exhibitors} />
+                  <MetricPill label="Visitors" value={evt.visitors.toLocaleString()} />
+                </div>
+
+                {/* Action button */}
+                <div className="mt-4">
+                  {tab === "completed" ? (
+                    <button
+                      type="button"
+                      onClick={() => router.push(`/dashboard/events/${evt.id}`)}
+                      className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                    >
+                      View Summary
+                    </button>
+                  ) : isConfirmed ? (
+                    <button
+                      type="button"
+                      onClick={() => router.push(`/dashboard/events/${evt.id}`)}
+                      className="w-full rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
+                    >
+                      Enter Event
+                    </button>
+                  ) : booking ? (
+                    <button
+                      type="button"
+                      onClick={() => router.push("/dashboard/bookings")}
+                      className="w-full rounded-lg border border-indigo-300 px-4 py-2 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-50 dark:border-indigo-500/30 dark:text-indigo-300 dark:hover:bg-indigo-500/10"
+                    >
+                      View Booking
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setBookingEventId(evt.id);
+                        setBookingModalOpen(true);
+                      }}
+                      className="w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
+                    >
+                      Book Booth
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {displayEvents.length === 0 && (
+        <div className="mt-12 text-center">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">No events found.</p>
+        </div>
+      )}
+
+      {/* Booth booking modal */}
+      {bookingEventId && (
+        <BoothBookingModal
+          open={bookingModalOpen}
+          onClose={() => {
+            setBookingModalOpen(false);
+            setBookingEventId(null);
+          }}
+          onSubmit={handleBookingSubmit}
+          eventId={bookingEventId}
+          userId={user?.id ?? ""}
+        />
+      )}
+    </div>
+  );
+}
+
+/* ─── Organiser Dashboard ─── */
+
+function OrganiserDashboard() {
   const { user } = useAuth();
   const router = useRouter();
   const [events, setEvents] = useState<MockEvent[]>(initialEvents);

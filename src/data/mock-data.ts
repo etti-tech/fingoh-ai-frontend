@@ -124,6 +124,61 @@ export type EventVisitor = {
   registeredDate: string;
 };
 
+/* ─── Exhibitor booking types ─── */
+
+export type BoothStyle = "bare_space" | "shell_scheme";
+export type BoothPosition = "corner" | "middle" | "island" | "end_cap";
+export type BookingStatus = "pending" | "approved" | "rejected" | "payment_pending" | "confirmed" | "cancelled";
+
+export type ExhibitorBooking = {
+  id: string;
+  userId: string;
+  eventId: string;
+  boothStyle: BoothStyle;
+  boothPosition: BoothPosition;
+  sqMeters: number;
+  hallPreference: string;
+  specialRequirements?: string;
+  status: BookingStatus;
+  submittedDate: string;
+  approvedDate?: string;
+  rejectedReason?: string;
+  totalPrice: string;
+};
+
+export type ExhibitorProduct = {
+  id: string;
+  userId: string;
+  eventId: string;
+  name: string;
+  category: string;
+  description: string;
+  image: string; // gradient placeholder
+};
+
+export type ExhibitorSponsor = {
+  id: string;
+  userId: string;
+  eventId: string;
+  tier: "platinum" | "gold" | "silver" | "bronze";
+  companyName: string;
+  amount: string;
+  status: "active" | "pending";
+};
+
+export type ExhibitorLead = {
+  id: string;
+  userId: string;
+  eventId: string;
+  visitorName: string;
+  visitorEmail: string;
+  visitorCompany: string;
+  interest: string;
+  score: "Hot" | "Warm" | "Cold";
+  capturedDate: string;
+  notes?: string;
+};
+
 /* ─── Mock Users (credentials for all roles) ─── */
 
 export const mockUsers: MockUser[] = [
@@ -437,4 +492,45 @@ export const pricingTiers = [
     description: "Tailored workflows and integrations for global exhibitions.",
     features: ["Unlimited exhibitors", "CRM integrations", "Custom branding", "Dedicated success manager"],
   },
+];
+
+/* ─── Exhibitor Bookings ─── */
+
+export const mockExhibitorBookings: ExhibitorBooking[] = [
+  { id: "BK-001", userId: "U-001", eventId: "EVT-001", boothStyle: "shell_scheme", boothPosition: "corner", sqMeters: 18, hallPreference: "Hall A", status: "confirmed", submittedDate: "2025-06-10", approvedDate: "2025-06-15", totalPrice: "$4,200" },
+  { id: "BK-002", userId: "U-001", eventId: "EVT-004", boothStyle: "bare_space", boothPosition: "island", sqMeters: 36, hallPreference: "Hall B", status: "pending", submittedDate: "2025-07-20", totalPrice: "$7,800" },
+  { id: "BK-003", userId: "U-002", eventId: "EVT-001", boothStyle: "shell_scheme", boothPosition: "middle", sqMeters: 12, hallPreference: "Hall B", status: "approved", submittedDate: "2025-06-12", approvedDate: "2025-06-18", totalPrice: "$2,800" },
+  { id: "BK-004", userId: "U-002", eventId: "EVT-002", boothStyle: "bare_space", boothPosition: "end_cap", sqMeters: 24, hallPreference: "Hall A", status: "confirmed", submittedDate: "2025-05-01", approvedDate: "2025-05-08", totalPrice: "$5,400" },
+  { id: "BK-005", userId: "U-004", eventId: "EVT-001", boothStyle: "shell_scheme", boothPosition: "corner", sqMeters: 18, hallPreference: "Hall A", status: "rejected", submittedDate: "2025-06-20", rejectedReason: "Hall A is fully booked", totalPrice: "$4,200" },
+  { id: "BK-006", userId: "U-001", eventId: "EVT-003", boothStyle: "bare_space", boothPosition: "middle", sqMeters: 24, hallPreference: "Hall C", status: "confirmed", submittedDate: "2025-01-05", approvedDate: "2025-01-10", totalPrice: "$5,400" },
+];
+
+/* ─── Exhibitor Products ─── */
+
+export const mockExhibitorProducts: ExhibitorProduct[] = [
+  { id: "PRD-001", userId: "U-001", eventId: "EVT-001", name: "SmartSensor Pro X1", category: "IoT Hardware", description: "Industrial-grade environmental sensor with edge AI processing", image: "from-indigo-500 to-purple-600" },
+  { id: "PRD-002", userId: "U-001", eventId: "EVT-001", name: "CloudEdge Platform", category: "Software", description: "Unified dashboard for managing IoT sensor fleet at scale", image: "from-cyan-500 to-blue-600" },
+  { id: "PRD-003", userId: "U-001", eventId: "EVT-003", name: "AutoPilot Module v3", category: "Autonomous Systems", description: "Retrofit autonomous navigation module for warehouse vehicles", image: "from-orange-500 to-red-600" },
+  { id: "PRD-004", userId: "U-002", eventId: "EVT-001", name: "NexaConnect Hub", category: "Networking", description: "Mesh networking hub for industrial plant connectivity", image: "from-emerald-500 to-teal-600" },
+  { id: "PRD-005", userId: "U-002", eventId: "EVT-002", name: "GreenMonitor Suite", category: "Sustainability", description: "Real-time energy and carbon footprint monitoring platform", image: "from-lime-500 to-green-600" },
+];
+
+/* ─── Exhibitor Sponsors ─── */
+
+export const mockExhibitorSponsors: ExhibitorSponsor[] = [
+  { id: "SP-001", userId: "U-001", eventId: "EVT-001", tier: "gold", companyName: "TechVentures Capital", amount: "$15,000", status: "active" },
+  { id: "SP-002", userId: "U-001", eventId: "EVT-001", tier: "silver", companyName: "InnoFund Partners", amount: "$8,000", status: "pending" },
+  { id: "SP-003", userId: "U-001", eventId: "EVT-003", tier: "platinum", companyName: "MegaCorp Industries", amount: "$25,000", status: "active" },
+  { id: "SP-004", userId: "U-002", eventId: "EVT-001", tier: "bronze", companyName: "StartupBoost", amount: "$3,000", status: "active" },
+];
+
+/* ─── Exhibitor Leads ─── */
+
+export const mockExhibitorLeads: ExhibitorLead[] = [
+  { id: "EL-001", userId: "U-001", eventId: "EVT-001", visitorName: "Aisha Rahman", visitorEmail: "aisha@techcorp.in", visitorCompany: "TechCorp India", interest: "SmartSensor bulk order", score: "Hot", capturedDate: "2025-08-15", notes: "Needs 500 units for factory deployment" },
+  { id: "EL-002", userId: "U-001", eventId: "EVT-001", visitorName: "James O'Brien", visitorEmail: "james@dualtech.ie", visitorCompany: "DualTech Ireland", interest: "CloudEdge licensing", score: "Warm", capturedDate: "2025-08-16" },
+  { id: "EL-003", userId: "U-001", eventId: "EVT-003", visitorName: "Felix Strauss", visitorEmail: "felix@automotion.at", visitorCompany: "AutoMotion", interest: "AutoPilot Module partnership", score: "Hot", capturedDate: "2025-03-10", notes: "Wants exclusive distribution for DACH region" },
+  { id: "EL-004", userId: "U-001", eventId: "EVT-001", visitorName: "Chen Wei", visitorEmail: "chen@globallink.cn", visitorCompany: "GlobalLink China", interest: "IoT platform integration", score: "Cold", capturedDate: "2025-08-17" },
+  { id: "EL-005", userId: "U-002", eventId: "EVT-001", visitorName: "Dmitri Volkov", visitorEmail: "dmitri@innovate.ru", visitorCompany: "Innovate Labs", interest: "NexaConnect Hub pilot", score: "Warm", capturedDate: "2025-08-15" },
+  { id: "EL-006", userId: "U-002", eventId: "EVT-002", visitorName: "Hans Muller", visitorEmail: "hans@greenbau.de", visitorCompany: "GreenBau GmbH", interest: "GreenMonitor enterprise license", score: "Hot", capturedDate: "2025-07-01" },
 ];
