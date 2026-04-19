@@ -35,10 +35,22 @@ const exhibitorLinks: SidebarLink[] = [
   { href: "/dashboard/settings", label: "Settings", icon: SettingsIcon },
 ];
 
+const visitorLinks: SidebarLink[] = [
+  { href: "/dashboard", label: "Events", icon: CalendarIcon },
+  { href: "/dashboard/floor-map", label: "Floor Map", icon: MapIcon },
+  { href: "/dashboard/my-badges", label: "My Badges", icon: BadgeIcon },
+  { href: "/dashboard/smart-match", label: "Smart Match", icon: SparklesIcon },
+  { href: "/dashboard/my-schedule", label: "My Schedule", icon: ClockIcon },
+  { href: "/dashboard/favorites", label: "Favorites", icon: HeartIcon },
+  { href: "/dashboard/networking", label: "Networking", icon: NetworkIcon },
+  { href: "/dashboard/profile", label: "Profile", icon: UserIcon },
+  { href: "/dashboard/settings", label: "Settings", icon: SettingsIcon },
+];
+
 const roleSidebarLinks: Record<UserRole, SidebarLink[]> = {
   organiser: organiserLinks,
   exhibitor: exhibitorLinks,
-  visitor: organiserLinks,   // fallback for now
+  visitor: visitorLinks,
   sponsor: organiserLinks,   // fallback for now
   vendor: organiserLinks,    // fallback for now
 };
@@ -302,6 +314,56 @@ function SponsorIcon({ active }: { active: boolean }) {
   return (
     <svg className={`h-5 w-5 ${active ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-400"}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+    </svg>
+  );
+}
+
+/* ─── Visitor-specific icons ─── */
+
+function MapIcon({ active }: { active: boolean }) {
+  return (
+    <svg className={`h-5 w-5 ${active ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-400"}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
+    </svg>
+  );
+}
+
+function BadgeIcon({ active }: { active: boolean }) {
+  return (
+    <svg className={`h-5 w-5 ${active ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-400"}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
+    </svg>
+  );
+}
+
+function SparklesIcon({ active }: { active: boolean }) {
+  return (
+    <svg className={`h-5 w-5 ${active ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-400"}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+    </svg>
+  );
+}
+
+function ClockIcon({ active }: { active: boolean }) {
+  return (
+    <svg className={`h-5 w-5 ${active ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-400"}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+    </svg>
+  );
+}
+
+function HeartIcon({ active }: { active: boolean }) {
+  return (
+    <svg className={`h-5 w-5 ${active ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-400"}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+    </svg>
+  );
+}
+
+function NetworkIcon({ active }: { active: boolean }) {
+  return (
+    <svg className={`h-5 w-5 ${active ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-400"}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
     </svg>
   );
 }

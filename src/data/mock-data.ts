@@ -182,11 +182,11 @@ export type ExhibitorLead = {
 /* ─── Mock Users (credentials for all roles) ─── */
 
 export const mockUsers: MockUser[] = [
-  { id: "U-001", name: "Nagaraj Jayaraman", email: "nagaraj@etti.tech", password: "12345", roles: ["organiser", "exhibitor", "sponsor"], role: "organiser", avatar: "NJ", company: "Etti Technologies" },
-  { id: "U-002", name: "Priya Sharma", email: "priya@exhibitor.com", password: "12345", roles: ["exhibitor", "visitor"], role: "exhibitor", avatar: "PS", company: "Nexa Systems" },
-  { id: "U-003", name: "Alex Walker", email: "alex@visitor.com", password: "12345", roles: ["visitor"], role: "visitor", avatar: "AW" },
-  { id: "U-004", name: "Sofia Martinez", email: "sofia@sponsor.com", password: "12345", roles: ["sponsor", "exhibitor"], role: "sponsor", avatar: "SM", company: "VoltGrid" },
-  { id: "U-005", name: "Raj Patel", email: "raj@vendor.com", password: "12345", roles: ["vendor", "visitor"], role: "vendor", avatar: "RP", company: "BlueForge" },
+  { id: "U-001", name: "Nagaraj Jayaraman", email: "nagaraj@etti.tech", password: "etti", roles: ["organiser", "exhibitor", "visitor"], role: "organiser", avatar: "NJ", company: "Etti Technologies" },
+  { id: "U-002", name: "Priya Sharma", email: "priya@organiser.com", password: "etti", roles: ["organiser"], role: "organiser", avatar: "PS", company: "Nexa Systems" },
+  { id: "U-003", name: "Alex Walker", email: "alex@exhibitor.com", password: "etti", roles: ["exhibitor"], role: "exhibitor", avatar: "AW" },
+  { id: "U-004", name: "Raam Kumar", email: "raam@visitor.com", password: "etti", roles: ["visitor"], role: "visitor", avatar: "RK", company: "VoltGrid" },
+  { id: "U-005", name: "Raj Patel", email: "raj@vendor.com", password: "etti", roles: ["vendor"], role: "vendor", avatar: "RP", company: "BlueForge" },
 ];
 
 /* ─── Mock Events ─── */
@@ -298,38 +298,38 @@ export const mockEventExhibitors: EventExhibitor[] = [
 /* ─── Mock Event Booths ─── */
 
 export const mockEventBooths: EventBooth[] = [
-  // EVT-001 – FutureTech Expo (Hall A: Premium, Hall B: Standard, Hall C: Large)
-  { boothNumber: "A-01", eventId: "EVT-001", hall: "A", boothType: "Premium 10x10", status: "empty", orders: 0 },
-  { boothNumber: "A-02", eventId: "EVT-001", hall: "A", boothType: "Premium 10x10", status: "empty", orders: 0 },
-  { boothNumber: "A-03", eventId: "EVT-001", hall: "A", boothType: "Premium 10x10", status: "empty", orders: 0 },
-  { boothNumber: "A-04", eventId: "EVT-001", hall: "A", boothType: "Premium 10x10", status: "empty", orders: 0 },
-  { boothNumber: "A-08", eventId: "EVT-001", hall: "A", boothType: "Premium 10x10", status: "booked", orders: 1 },
-  { boothNumber: "A-12", eventId: "EVT-001", hall: "A", boothType: "Premium 10x10", status: "pending", orders: 1 },
-  { boothNumber: "B-01", eventId: "EVT-001", hall: "B", boothType: "Standard 6x6", status: "empty", orders: 0 },
-  { boothNumber: "B-02", eventId: "EVT-001", hall: "B", boothType: "Standard 6x6", status: "empty", orders: 0 },
-  { boothNumber: "B-03", eventId: "EVT-001", hall: "B", boothType: "Standard 6x6", status: "empty", orders: 0 },
-  { boothNumber: "B-04", eventId: "EVT-001", hall: "B", boothType: "Standard 6x6", status: "approved", orders: 1 },
-  { boothNumber: "B-07", eventId: "EVT-001", hall: "B", boothType: "Standard 6x6", status: "empty", orders: 1 },
-  { boothNumber: "B-11", eventId: "EVT-001", hall: "B", boothType: "Standard 6x6", status: "pending", orders: 1 },
-  { boothNumber: "C-01", eventId: "EVT-001", hall: "C", boothType: "Large 12x12", status: "payment_pending", orders: 1 },
-  { boothNumber: "C-02", eventId: "EVT-001", hall: "C", boothType: "Large 12x12", status: "empty", orders: 0 },
-  { boothNumber: "C-03", eventId: "EVT-001", hall: "C", boothType: "Large 12x12", status: "empty", orders: 0 },
+  // EVT-001 – FutureTech Expo (Hall 1: Premium, Hall 2: Standard, Hall 3: Large)
+  { boothNumber: "A-01", eventId: "EVT-001", hall: "1", boothType: "Premium 10x10", status: "empty", orders: 0 },
+  { boothNumber: "A-02", eventId: "EVT-001", hall: "1", boothType: "Premium 10x10", status: "empty", orders: 0 },
+  { boothNumber: "A-03", eventId: "EVT-001", hall: "1", boothType: "Premium 10x10", status: "empty", orders: 0 },
+  { boothNumber: "A-04", eventId: "EVT-001", hall: "1", boothType: "Premium 10x10", status: "empty", orders: 0 },
+  { boothNumber: "A-08", eventId: "EVT-001", hall: "1", boothType: "Premium 10x10", status: "booked", orders: 1 },
+  { boothNumber: "A-12", eventId: "EVT-001", hall: "1", boothType: "Premium 10x10", status: "pending", orders: 1 },
+  { boothNumber: "B-01", eventId: "EVT-001", hall: "2", boothType: "Standard 6x6", status: "empty", orders: 0 },
+  { boothNumber: "B-02", eventId: "EVT-001", hall: "2", boothType: "Standard 6x6", status: "empty", orders: 0 },
+  { boothNumber: "B-03", eventId: "EVT-001", hall: "2", boothType: "Standard 6x6", status: "empty", orders: 0 },
+  { boothNumber: "B-04", eventId: "EVT-001", hall: "2", boothType: "Standard 6x6", status: "approved", orders: 1 },
+  { boothNumber: "B-07", eventId: "EVT-001", hall: "2", boothType: "Standard 6x6", status: "empty", orders: 1 },
+  { boothNumber: "B-11", eventId: "EVT-001", hall: "2", boothType: "Standard 6x6", status: "pending", orders: 1 },
+  { boothNumber: "C-01", eventId: "EVT-001", hall: "3", boothType: "Large 12x12", status: "payment_pending", orders: 1 },
+  { boothNumber: "C-02", eventId: "EVT-001", hall: "3", boothType: "Large 12x12", status: "empty", orders: 0 },
+  { boothNumber: "C-03", eventId: "EVT-001", hall: "3", boothType: "Large 12x12", status: "empty", orders: 0 },
   // EVT-002 – GreenBuild Summit
-  { boothNumber: "A-01", eventId: "EVT-002", hall: "A", boothType: "Premium 10x10", status: "empty", orders: 0 },
-  { boothNumber: "A-02", eventId: "EVT-002", hall: "A", boothType: "Premium 10x10", status: "empty", orders: 0 },
-  { boothNumber: "A-03", eventId: "EVT-002", hall: "A", boothType: "Premium 10x10", status: "booked", orders: 1 },
-  { boothNumber: "B-09", eventId: "EVT-002", hall: "B", boothType: "Standard 6x6", status: "pending", orders: 1 },
-  { boothNumber: "B-10", eventId: "EVT-002", hall: "B", boothType: "Standard 6x6", status: "empty", orders: 0 },
+  { boothNumber: "A-01", eventId: "EVT-002", hall: "1", boothType: "Premium 10x10", status: "empty", orders: 0 },
+  { boothNumber: "A-02", eventId: "EVT-002", hall: "1", boothType: "Premium 10x10", status: "empty", orders: 0 },
+  { boothNumber: "A-03", eventId: "EVT-002", hall: "1", boothType: "Premium 10x10", status: "booked", orders: 1 },
+  { boothNumber: "B-09", eventId: "EVT-002", hall: "2", boothType: "Standard 6x6", status: "pending", orders: 1 },
+  { boothNumber: "B-10", eventId: "EVT-002", hall: "2", boothType: "Standard 6x6", status: "empty", orders: 0 },
   // EVT-003 – AutoDrive World
-  { boothNumber: "C-05", eventId: "EVT-003", hall: "C", boothType: "Large 12x12", status: "booked", orders: 1 },
-  { boothNumber: "C-06", eventId: "EVT-003", hall: "C", boothType: "Large 12x12", status: "empty", orders: 0 },
+  { boothNumber: "C-05", eventId: "EVT-003", hall: "3", boothType: "Large 12x12", status: "booked", orders: 1 },
+  { boothNumber: "C-06", eventId: "EVT-003", hall: "3", boothType: "Large 12x12", status: "empty", orders: 0 },
   // EVT-004 – HealthTech Connect
-  { boothNumber: "A-15", eventId: "EVT-004", hall: "A", boothType: "Premium 10x10", status: "pending", orders: 1 },
-  { boothNumber: "B-01", eventId: "EVT-004", hall: "B", boothType: "Standard 6x6", status: "empty", orders: 0 },
-  { boothNumber: "B-02", eventId: "EVT-004", hall: "B", boothType: "Standard 6x6", status: "approved", orders: 1 },
+  { boothNumber: "A-15", eventId: "EVT-004", hall: "1", boothType: "Premium 10x10", status: "pending", orders: 1 },
+  { boothNumber: "B-01", eventId: "EVT-004", hall: "2", boothType: "Standard 6x6", status: "empty", orders: 0 },
+  { boothNumber: "B-02", eventId: "EVT-004", hall: "2", boothType: "Standard 6x6", status: "approved", orders: 1 },
   // EVT-006 – FoodPro Asia
-  { boothNumber: "B-06", eventId: "EVT-006", hall: "B", boothType: "Standard 6x6", status: "booked", orders: 1 },
-  { boothNumber: "B-07", eventId: "EVT-006", hall: "B", boothType: "Standard 6x6", status: "empty", orders: 0 },
+  { boothNumber: "B-06", eventId: "EVT-006", hall: "2", boothType: "Standard 6x6", status: "booked", orders: 1 },
+  { boothNumber: "B-07", eventId: "EVT-006", hall: "2", boothType: "Standard 6x6", status: "empty", orders: 0 },
 ];
 
 /* ─── Mock Event Visitors ─── */
@@ -440,14 +440,14 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const booths: Booth[] = [
-  { id: "A-01", hall: "Hall A", size: "6x6", price: "$1,400", status: "available" },
-  { id: "A-02", hall: "Hall A", size: "6x6", price: "$1,400", status: "reserved" },
-  { id: "A-03", hall: "Hall A", size: "6x6", price: "$1,400", status: "available" },
-  { id: "B-10", hall: "Hall B", size: "8x8", price: "$2,100", status: "available" },
-  { id: "B-11", hall: "Hall B", size: "8x8", price: "$2,100", status: "reserved" },
-  { id: "C-04", hall: "Hall C", size: "10x10", price: "$2,900", status: "available" },
-  { id: "C-05", hall: "Hall C", size: "10x10", price: "$2,900", status: "available" },
-  { id: "D-07", hall: "Hall D", size: "12x12", price: "$3,600", status: "reserved" },
+  { id: "A-01", hall: "Hall 1", size: "6x6", price: "$1,400", status: "available" },
+  { id: "A-02", hall: "Hall 1", size: "6x6", price: "$1,400", status: "reserved" },
+  { id: "A-03", hall: "Hall 1", size: "6x6", price: "$1,400", status: "available" },
+  { id: "B-10", hall: "Hall 2", size: "8x8", price: "$2,100", status: "available" },
+  { id: "B-11", hall: "Hall 2", size: "8x8", price: "$2,100", status: "reserved" },
+  { id: "C-04", hall: "Hall 3", size: "10x10", price: "$2,900", status: "available" },
+  { id: "C-05", hall: "Hall 3", size: "10x10", price: "$2,900", status: "available" },
+  { id: "D-07", hall: "Hall 4", size: "12x12", price: "$3,600", status: "reserved" },
 ];
 
 export const leads: Lead[] = [
@@ -494,15 +494,171 @@ export const pricingTiers = [
   },
 ];
 
+/* ─── Visitor types ─── */
+
+export type VisitorRegistration = {
+  id: string;
+  userId: string;
+  eventId: string;
+  status: "registered" | "checked_in" | "cancelled";
+  registeredDate: string;
+  ticketType: "general" | "vip" | "business";
+  badgeDownloaded: boolean;
+  qrCode: string; // mock QR identifier
+};
+
+export type VisitorInterest = {
+  id: string;
+  userId: string;
+  keyword: string;
+  category: "product" | "technology" | "industry" | "job" | "service";
+};
+
+export type StallKeyword = {
+  eventId: string;
+  boothNumber: string;
+  exhibitorName: string;
+  company: string;
+  hall: string;
+  keywords: string[];
+  category: string;
+  description: string;
+  matchScore?: number; // computed at runtime
+};
+
+export type VisitorScheduleItem = {
+  id: string;
+  userId: string;
+  eventId: string;
+  title: string;
+  type: "visit_stall" | "meeting" | "seminar" | "break" | "custom";
+  location: string;
+  time: string;
+  duration: string;
+  notes?: string;
+  completed: boolean;
+};
+
+export type VisitorFavorite = {
+  id: string;
+  userId: string;
+  eventId: string;
+  exhibitorName: string;
+  company: string;
+  boothNumber: string;
+  hall: string;
+  industry: string;
+  notes?: string;
+  savedDate: string;
+};
+
+export type NetworkingContact = {
+  id: string;
+  userId: string;
+  eventId: string;
+  contactName: string;
+  contactCompany: string;
+  contactRole: string;
+  contactEmail: string;
+  contactPhone: string;
+  avatar: string;
+  type: "exhibitor" | "visitor" | "speaker";
+  status: "pending" | "connected" | "declined";
+  connectedDate: string;
+  notes?: string;
+};
+
+export type FloorMapExhibitor = {
+  boothNumber: string;
+  company: string;
+  logo: string; // gradient placeholder
+  industry: string;
+};
+
+export type FloorMapHall = {
+  id: string;
+  eventId: string;
+  hallName: string;
+  hallLabel: string; // e.g. "Hall 1 – Premium Zone"
+  mapImage: string | null; // organiser-uploaded image URL, null = coming soon
+  exhibitors: FloorMapExhibitor[];
+};
+
+export type FloorMapOverview = {
+  eventId: string;
+  eventTitle: string;
+  overviewImage: string | null; // organiser-uploaded overall map, null = coming soon
+  halls: FloorMapHall[];
+};
+
+/* ─── Visitor Mock Data ─── */
+
+export const mockVisitorRegistrations: VisitorRegistration[] = [
+  { id: "VR-001", userId: "U-003", eventId: "EVT-001", status: "registered", registeredDate: "2025-07-01", ticketType: "business", badgeDownloaded: false, qrCode: "QR-EVT001-U003" },
+  { id: "VR-002", userId: "U-003", eventId: "EVT-002", status: "checked_in", registeredDate: "2025-06-10", ticketType: "general", badgeDownloaded: true, qrCode: "QR-EVT002-U003" },
+  { id: "VR-003", userId: "U-003", eventId: "EVT-004", status: "registered", registeredDate: "2025-08-15", ticketType: "vip", badgeDownloaded: false, qrCode: "QR-EVT004-U003" },
+  { id: "VR-004", userId: "U-003", eventId: "EVT-003", status: "checked_in", registeredDate: "2025-02-20", ticketType: "general", badgeDownloaded: true, qrCode: "QR-EVT003-U003" },
+  { id: "VR-005", userId: "U-001", eventId: "EVT-001", status: "registered", registeredDate: "2025-07-05", ticketType: "vip", badgeDownloaded: false, qrCode: "QR-EVT001-U001" },
+  { id: "VR-006", userId: "U-002", eventId: "EVT-001", status: "registered", registeredDate: "2025-07-08", ticketType: "business", badgeDownloaded: true, qrCode: "QR-EVT001-U002" },
+  { id: "VR-007", userId: "U-005", eventId: "EVT-002", status: "registered", registeredDate: "2025-06-05", ticketType: "general", badgeDownloaded: false, qrCode: "QR-EVT002-U005" },
+];
+
+export const mockVisitorInterests: VisitorInterest[] = [
+  { id: "VI-001", userId: "U-003", keyword: "IoT sensors", category: "technology" },
+  { id: "VI-002", userId: "U-003", keyword: "warehouse automation", category: "technology" },
+  { id: "VI-003", userId: "U-003", keyword: "AI analytics", category: "technology" },
+  { id: "VI-004", userId: "U-003", keyword: "energy monitoring", category: "product" },
+  { id: "VI-005", userId: "U-003", keyword: "distributor partnerships", category: "service" },
+  { id: "VI-006", userId: "U-003", keyword: "robotics engineer", category: "job" },
+];
+
+export const mockStallKeywords: StallKeyword[] = [
+  { eventId: "EVT-001", boothNumber: "A-12", exhibitorName: "Rahul Gupta", company: "Nexa Systems", hall: "1", keywords: ["IoT", "sensors", "industrial IoT", "connectivity", "mesh networking"], category: "Industrial IoT", description: "Connected machinery monitoring platform for modern factories." },
+  { eventId: "EVT-001", boothNumber: "B-04", exhibitorName: "Elena Vasquez", company: "VoltGrid", hall: "2", keywords: ["energy", "EV charging", "smart grid", "energy monitoring", "sustainability"], category: "Energy Tech", description: "Smart infrastructure for EV charging and energy optimization." },
+  { eventId: "EVT-001", boothNumber: "A-08", exhibitorName: "Tom Henderson", company: "Aria Mobility", hall: "1", keywords: ["autonomous", "fleet", "mobility", "AI", "safety", "vehicles"], category: "Mobility", description: "Autonomous fleet management with safety-first AI controls." },
+  { eventId: "EVT-001", boothNumber: "B-11", exhibitorName: "Amara Osei", company: "Hexa Industry", hall: "2", keywords: ["robotics", "automation", "warehouse", "warehouse automation", "conveyor"], category: "Automation", description: "Robotics and automation suites for warehouse operations." },
+  { eventId: "EVT-001", boothNumber: "C-01", exhibitorName: "Kenji Tanaka", company: "BlueForge", hall: "3", keywords: ["manufacturing", "analytics", "SaaS", "production", "AI analytics", "supplier"], category: "Manufacturing SaaS", description: "Production analytics and supplier collaboration workspace." },
+  { eventId: "EVT-001", boothNumber: "B-07", exhibitorName: "Fatima Al-Rashid", company: "AtlasBio", hall: "3", keywords: ["biotech", "lab automation", "clinical research", "genomics"], category: "Biotech", description: "Lab automation tools for scale-ready clinical research teams." },
+  { eventId: "EVT-002", boothNumber: "A-03", exhibitorName: "Lukas Braun", company: "EcoBuild GmbH", hall: "1", keywords: ["green construction", "sustainable", "building", "eco", "carbon neutral"], category: "Green Construction", description: "Sustainable construction materials and techniques for carbon-neutral buildings." },
+  { eventId: "EVT-002", boothNumber: "B-09", exhibitorName: "Ingrid Holm", company: "SolarNord", hall: "2", keywords: ["solar", "energy", "renewable", "panels", "off-grid"], category: "Solar Energy", description: "Next-generation solar panels with record efficiency for commercial buildings." },
+  { eventId: "EVT-004", boothNumber: "A-15", exhibitorName: "Dr. Lin Wei", company: "MedScan Technologies", hall: "1", keywords: ["medical devices", "AI diagnostics", "imaging", "health", "MRI"], category: "Medical Devices", description: "AI-powered medical imaging and diagnostic tools for hospitals." },
+  { eventId: "EVT-004", boothNumber: "B-02", exhibitorName: "Rachel Kim", company: "BioSynth Labs", hall: "2", keywords: ["biotech", "pharma", "drug discovery", "synthesizer", "lab"], category: "Biotech", description: "Automated drug discovery and synthesis platform for pharma R&D." },
+];
+
+export const mockVisitorSchedule: VisitorScheduleItem[] = [
+  { id: "VS-001", userId: "U-003", eventId: "EVT-001", title: "Visit Nexa Systems booth", type: "visit_stall", location: "Hall 1, Booth A-12", time: "10:00 AM", duration: "30 min", completed: false },
+  { id: "VS-002", userId: "U-003", eventId: "EVT-001", title: "AI & IoT Keynote Session", type: "seminar", location: "Main Stage, Hall 1", time: "11:00 AM", duration: "1 hr", completed: false },
+  { id: "VS-003", userId: "U-003", eventId: "EVT-001", title: "Meeting with VoltGrid team", type: "meeting", location: "Hall 2, Booth B-04", time: "12:30 PM", duration: "45 min", notes: "Discuss energy monitoring integration", completed: false },
+  { id: "VS-004", userId: "U-003", eventId: "EVT-001", title: "Lunch Break", type: "break", location: "Food Court, Level 2", time: "1:30 PM", duration: "45 min", completed: false },
+  { id: "VS-005", userId: "U-003", eventId: "EVT-001", title: "Explore Hexa Industry robotics demo", type: "visit_stall", location: "Hall 2, Booth B-11", time: "2:30 PM", duration: "30 min", completed: false },
+  { id: "VS-006", userId: "U-003", eventId: "EVT-001", title: "Networking mixer", type: "custom", location: "Lounge Area, Hall 3", time: "4:00 PM", duration: "1 hr", notes: "Bring business cards", completed: false },
+];
+
+export const mockVisitorFavorites: VisitorFavorite[] = [
+  { id: "VF-001", userId: "U-003", eventId: "EVT-001", exhibitorName: "Rahul Gupta", company: "Nexa Systems", boothNumber: "A-12", hall: "1", industry: "Industrial IoT", notes: "Interested in bulk sensor order", savedDate: "2025-07-05" },
+  { id: "VF-002", userId: "U-003", eventId: "EVT-001", exhibitorName: "Elena Vasquez", company: "VoltGrid", boothNumber: "B-04", hall: "2", industry: "Energy Tech", savedDate: "2025-07-06" },
+  { id: "VF-003", userId: "U-003", eventId: "EVT-001", exhibitorName: "Amara Osei", company: "Hexa Industry", boothNumber: "B-11", hall: "2", industry: "Automation", notes: "Warehouse automation demo at 2:30", savedDate: "2025-07-07" },
+  { id: "VF-004", userId: "U-003", eventId: "EVT-002", exhibitorName: "Lukas Braun", company: "EcoBuild GmbH", boothNumber: "A-03", hall: "1", industry: "Green Construction", savedDate: "2025-06-12" },
+];
+
+export const mockNetworkingContacts: NetworkingContact[] = [
+  { id: "NC-001", userId: "U-003", eventId: "EVT-001", contactName: "Rahul Gupta", contactCompany: "Nexa Systems", contactRole: "Sales Director", contactEmail: "rahul@nexasystems.io", contactPhone: "+91-98765-43210", avatar: "RG", type: "exhibitor", status: "connected", connectedDate: "2025-07-10", notes: "Met at booth A-12" },
+  { id: "NC-002", userId: "U-003", eventId: "EVT-001", contactName: "Aisha Rahman", contactCompany: "TechCorp India", contactRole: "Procurement Lead", contactEmail: "aisha@techcorp.in", contactPhone: "+91-98765-00001", avatar: "AR", type: "visitor", status: "connected", connectedDate: "2025-07-10" },
+  { id: "NC-003", userId: "U-003", eventId: "EVT-001", contactName: "Kenji Tanaka", contactCompany: "BlueForge", contactRole: "CTO", contactEmail: "kenji@blueforge.us", contactPhone: "+1-512-555-0188", avatar: "KT", type: "exhibitor", status: "pending", connectedDate: "2025-07-12" },
+  { id: "NC-004", userId: "U-003", eventId: "EVT-001", contactName: "Dr. Sarah Chen", contactCompany: "MIT Research Lab", contactRole: "Keynote Speaker", contactEmail: "sarah.chen@mit.edu", contactPhone: "+1-617-555-0199", avatar: "SC", type: "speaker", status: "connected", connectedDate: "2025-07-11", notes: "Discussed AI in manufacturing" },
+  { id: "NC-005", userId: "U-003", eventId: "EVT-002", contactName: "Hans Muller", contactCompany: "GreenBau GmbH", contactRole: "Sustainability Director", contactEmail: "hans@greenbau.de", contactPhone: "+49-151-23456789", avatar: "HM", type: "visitor", status: "connected", connectedDate: "2025-06-20" },
+  { id: "NC-006", userId: "U-003", eventId: "EVT-001", contactName: "Elena Vasquez", contactCompany: "VoltGrid", contactRole: "Regional Manager", contactEmail: "elena@voltgrid.eu", contactPhone: "+31-612-345678", avatar: "EV", type: "exhibitor", status: "declined", connectedDate: "2025-07-10" },
+];
+
 /* ─── Exhibitor Bookings ─── */
 
 export const mockExhibitorBookings: ExhibitorBooking[] = [
-  { id: "BK-001", userId: "U-001", eventId: "EVT-001", boothStyle: "shell_scheme", boothPosition: "corner", sqMeters: 18, hallPreference: "Hall A", status: "confirmed", submittedDate: "2025-06-10", approvedDate: "2025-06-15", totalPrice: "$4,200" },
-  { id: "BK-002", userId: "U-001", eventId: "EVT-004", boothStyle: "bare_space", boothPosition: "island", sqMeters: 36, hallPreference: "Hall B", status: "pending", submittedDate: "2025-07-20", totalPrice: "$7,800" },
-  { id: "BK-003", userId: "U-002", eventId: "EVT-001", boothStyle: "shell_scheme", boothPosition: "middle", sqMeters: 12, hallPreference: "Hall B", status: "approved", submittedDate: "2025-06-12", approvedDate: "2025-06-18", totalPrice: "$2,800" },
-  { id: "BK-004", userId: "U-002", eventId: "EVT-002", boothStyle: "bare_space", boothPosition: "end_cap", sqMeters: 24, hallPreference: "Hall A", status: "confirmed", submittedDate: "2025-05-01", approvedDate: "2025-05-08", totalPrice: "$5,400" },
-  { id: "BK-005", userId: "U-004", eventId: "EVT-001", boothStyle: "shell_scheme", boothPosition: "corner", sqMeters: 18, hallPreference: "Hall A", status: "rejected", submittedDate: "2025-06-20", rejectedReason: "Hall A is fully booked", totalPrice: "$4,200" },
-  { id: "BK-006", userId: "U-001", eventId: "EVT-003", boothStyle: "bare_space", boothPosition: "middle", sqMeters: 24, hallPreference: "Hall C", status: "confirmed", submittedDate: "2025-01-05", approvedDate: "2025-01-10", totalPrice: "$5,400" },
+  { id: "BK-001", userId: "U-001", eventId: "EVT-001", boothStyle: "shell_scheme", boothPosition: "corner", sqMeters: 18, hallPreference: "Hall 1", status: "confirmed", submittedDate: "2025-06-10", approvedDate: "2025-06-15", totalPrice: "$4,200" },
+  { id: "BK-002", userId: "U-001", eventId: "EVT-004", boothStyle: "bare_space", boothPosition: "island", sqMeters: 36, hallPreference: "Hall 2", status: "pending", submittedDate: "2025-07-20", totalPrice: "$7,800" },
+  { id: "BK-003", userId: "U-002", eventId: "EVT-001", boothStyle: "shell_scheme", boothPosition: "middle", sqMeters: 12, hallPreference: "Hall 2", status: "approved", submittedDate: "2025-06-12", approvedDate: "2025-06-18", totalPrice: "$2,800" },
+  { id: "BK-004", userId: "U-002", eventId: "EVT-002", boothStyle: "bare_space", boothPosition: "end_cap", sqMeters: 24, hallPreference: "Hall 1", status: "confirmed", submittedDate: "2025-05-01", approvedDate: "2025-05-08", totalPrice: "$5,400" },
+  { id: "BK-005", userId: "U-004", eventId: "EVT-001", boothStyle: "shell_scheme", boothPosition: "corner", sqMeters: 18, hallPreference: "Hall 1", status: "rejected", submittedDate: "2025-06-20", rejectedReason: "Hall 1 is fully booked", totalPrice: "$4,200" },
+  { id: "BK-006", userId: "U-001", eventId: "EVT-003", boothStyle: "bare_space", boothPosition: "middle", sqMeters: 24, hallPreference: "Hall 3", status: "confirmed", submittedDate: "2025-01-05", approvedDate: "2025-01-10", totalPrice: "$5,400" },
 ];
 
 /* ─── Exhibitor Products ─── */
@@ -533,4 +689,93 @@ export const mockExhibitorLeads: ExhibitorLead[] = [
   { id: "EL-004", userId: "U-001", eventId: "EVT-001", visitorName: "Chen Wei", visitorEmail: "chen@globallink.cn", visitorCompany: "GlobalLink China", interest: "IoT platform integration", score: "Cold", capturedDate: "2025-08-17" },
   { id: "EL-005", userId: "U-002", eventId: "EVT-001", visitorName: "Dmitri Volkov", visitorEmail: "dmitri@innovate.ru", visitorCompany: "Innovate Labs", interest: "NexaConnect Hub pilot", score: "Warm", capturedDate: "2025-08-15" },
   { id: "EL-006", userId: "U-002", eventId: "EVT-002", visitorName: "Hans Muller", visitorEmail: "hans@greenbau.de", visitorCompany: "GreenBau GmbH", interest: "GreenMonitor enterprise license", score: "Hot", capturedDate: "2025-07-01" },
+];
+
+/* ─── Floor Map Data (organiser-uploaded) ─── */
+
+export const mockFloorMaps: FloorMapOverview[] = [
+  {
+    eventId: "EVT-001",
+    eventTitle: "FutureTech Expo 2025",
+    overviewImage: null, // organiser will upload overall floor plan
+    halls: [
+      {
+        id: "FH-001",
+        eventId: "EVT-001",
+        hallName: "1",
+        hallLabel: "Hall 1 – Premium Zone",
+        mapImage: null,
+        exhibitors: [
+          { boothNumber: "A-08", company: "Etti Technologies", logo: "from-indigo-500 to-purple-600", industry: "IoT & AI" },
+          { boothNumber: "A-12", company: "DataCore Solutions", logo: "from-cyan-500 to-blue-600", industry: "Data Analytics" },
+        ],
+      },
+      {
+        id: "FH-002",
+        eventId: "EVT-001",
+        hallName: "2",
+        hallLabel: "Hall 2 – Standard Zone",
+        mapImage: null,
+        exhibitors: [
+          { boothNumber: "B-04", company: "Nexa Systems", logo: "from-emerald-500 to-teal-600", industry: "Networking" },
+          { boothNumber: "B-07", company: "AutoPilot Inc", logo: "from-orange-500 to-red-600", industry: "Autonomous Systems" },
+          { boothNumber: "B-11", company: "SmartFab Japan", logo: "from-pink-500 to-rose-600", industry: "Smart Manufacturing" },
+        ],
+      },
+      {
+        id: "FH-003",
+        eventId: "EVT-001",
+        hallName: "3",
+        hallLabel: "Hall 3 – Large Exhibits",
+        mapImage: null,
+        exhibitors: [
+          { boothNumber: "C-01", company: "VoltGrid", logo: "from-amber-500 to-yellow-600", industry: "Energy Solutions" },
+        ],
+      },
+    ],
+  },
+  {
+    eventId: "EVT-002",
+    eventTitle: "GreenBuild Summit 2025",
+    overviewImage: null,
+    halls: [
+      {
+        id: "FH-004",
+        eventId: "EVT-002",
+        hallName: "1",
+        hallLabel: "Hall 1 – Sustainability Pavilion",
+        mapImage: null,
+        exhibitors: [
+          { boothNumber: "A-03", company: "EcoBuild GmbH", logo: "from-lime-500 to-green-600", industry: "Green Construction" },
+        ],
+      },
+      {
+        id: "FH-005",
+        eventId: "EVT-002",
+        hallName: "2",
+        hallLabel: "Hall 2 – Clean Energy",
+        mapImage: null,
+        exhibitors: [
+          { boothNumber: "B-09", company: "SolarNord", logo: "from-sky-500 to-blue-600", industry: "Solar Energy" },
+        ],
+      },
+    ],
+  },
+  {
+    eventId: "EVT-003",
+    eventTitle: "AutoDrive World Congress",
+    overviewImage: null,
+    halls: [
+      {
+        id: "FH-006",
+        eventId: "EVT-003",
+        hallName: "3",
+        hallLabel: "Hall 3 – Autonomous Driving Arena",
+        mapImage: null,
+        exhibitors: [
+          { boothNumber: "C-05", company: "DriveTech AI", logo: "from-violet-500 to-purple-600", industry: "Autonomous Driving" },
+        ],
+      },
+    ],
+  },
 ];

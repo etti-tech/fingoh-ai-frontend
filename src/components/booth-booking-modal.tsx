@@ -23,7 +23,7 @@ const boothPositions: { value: BoothPosition; label: string; description: string
   { value: "end_cap", label: "End Cap", description: "Three open sides at the end of a row" },
 ];
 
-const halls = ["Hall A", "Hall B", "Hall C", "Hall D"];
+const halls = ["Hall 1", "Hall 2", "Hall 3", "Hall 4"];
 
 const pricePerSqMeter: Record<BoothStyle, number> = {
   bare_space: 180,
@@ -44,13 +44,13 @@ export default function BoothBookingModal({ open, onClose, onSubmit, eventId, us
     boothStyle: "shell_scheme" as BoothStyle,
     boothPosition: "middle" as BoothPosition,
     sqMeters: 12,
-    hallPreference: "Hall A",
+    hallPreference: "Hall 1",
     specialRequirements: "",
   });
 
   useEffect(() => {
     if (open) {
-      setForm({ boothStyle: "shell_scheme", boothPosition: "middle", sqMeters: 12, hallPreference: "Hall A", specialRequirements: "" });
+      setForm({ boothStyle: "shell_scheme", boothPosition: "middle", sqMeters: 12, hallPreference: "Hall 1", specialRequirements: "" });
     }
   }, [open]);
 

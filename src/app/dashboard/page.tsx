@@ -6,7 +6,7 @@ import { useAuth } from "@/components/auth-context";
 import EventModal from "@/components/event-modal";
 import BoothBookingModal from "@/components/booth-booking-modal";
 import type { MockEvent, ExhibitorBooking } from "@/data/mock-data";
-import { mockEvents as initialEvents, mockExhibitorBookings } from "@/data/mock-data";
+import { mockEvents as initialEvents, mockExhibitorBookings, mockVisitorRegistrations } from "@/data/mock-data";
 
 const statusColors: Record<MockEvent["status"], string> = {
   upcoming: "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300",
@@ -26,6 +26,7 @@ export default function DashboardPage() {
   const { user } = useAuth();
 
   if (user?.role === "exhibitor") return <ExhibitorDashboard />;
+  if (user?.role === "visitor") return <VisitorDashboard />;
   return <OrganiserDashboard />;
 }
 
@@ -222,6 +223,204 @@ function ExhibitorDashboard() {
           eventId={bookingEventId}
           userId={user?.id ?? ""}
         />
+      )}
+    </div>
+  );
+}
+
+/* ─── Organiser Dashboard ─── */
+
+function VisitorDashboard() {
+  const { user } = useAuth();
+  const router = useRouter();
+  const [tab, setTab] = useState<"upcoming" | "registered" | "completed">("upcoming");
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const registrations = mockVisitorRegistrations.filter((r) => r.userId === user?.id);
+  const registeredEventIds = new Set(registrations.map((r) => r.eventId));
+
+  const upcomingEvents = initialEvents.filter((e) => (e.status === "upcoming" || e.status === "live") && !registeredEventIds.has(e.id));
+  const registeredEvents = initialEvents.filter((e) => registeredEventIds.has(e.id) && e.status !== "completed");
+  const completedEvents = initialEvents.filter((e) => registeredEventIds.has(e.id) && e.status === "completed");
+
+  const displayEvents = tab === "upcoming" ? upcomingEvents : tab === "registered" ? registeredEvents : completedEvents;
+
+  const stats = [
+    { label: "Registered Events", value: registrations.filter((r) => r.status === "registered").length, color: "text-blue-600 dark:text-blue-400" },
+    { label: "Checked In", value: registrations.filter((r) => r.status === "checked_in").length, color: "text-emerald-600 dark:text-emerald-400" },
+    { label: "Badges Ready", value: registrations.filter((r) => !r.badgeDownloaded && r.status !== "cancelled").length, color: "text-amber-600 dark:text-amber-400" },
+    { label: "Events Attended", value: completedEvents.length, color: "text-zinc-500" },
+  ];
+
+  const registrationStatusBadge: Record<string, string> = {
+    registered: "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300",
+    checked_in: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
+    cancelled: "bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-300",
+  };
+
+  const handleShareLink = (eventId: string) => {
+    const url = `${window.location.origin}/dashboard/events/${eventId}`;
+    navigator.clipboard.writeText(url);
+    setCopiedId(eventId);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleRegister = (eventId: string) => {
+    // In a real app this would be an API call
+    mockVisitorRegistrations.push({
+      id: `VR-${Date.now()}`,
+      userId: user?.id ?? "",
+      eventId,
+      status: "registered",
+      registeredDate: new Date().toISOString().split("T")[0],
+      ticketType: "general",
+      badgeDownloaded: false,
+      qrCode: `QR-${eventId}-${user?.id}`,
+    });
+    router.push("/dashboard/my-badges");
+  };
+
+  return (
+    <div className="mx-auto max-w-6xl">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+          Welcome back, {user?.name?.split(" ")[0]}
+        </h1>
+        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+          Discover trade fairs, plan your visit, and connect with exhibitors
+        </p>
+      </div>
+
+      {/* Stats */}
+      <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {stats.map((s) => (
+          <div key={s.label} className="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">{s.label}</p>
+            <p className={`mt-1 text-2xl font-bold ${s.color}`}>{s.value}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Quick actions */}
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <button type="button" onClick={() => router.push("/dashboard/smart-match")} className="flex items-center gap-2 rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100 dark:border-indigo-500/30 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" /></svg>
+          Smart Match
+        </button>
+
+        <button type="button" onClick={() => router.push("/dashboard/floor-map")} className="flex items-center gap-2 rounded-xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm font-semibold text-teal-700 transition hover:bg-teal-100 dark:border-teal-500/30 dark:bg-teal-500/10 dark:text-teal-300 dark:hover:bg-teal-500/20">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" /></svg>
+          Floor Map
+        </button>
+
+        <button type="button" onClick={() => router.push("/dashboard/my-badges")} className="flex items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-700 transition hover:bg-amber-100 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300 dark:hover:bg-amber-500/20">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Z" /></svg>
+          My Badges
+        </button>
+        <button type="button" onClick={() => router.push("/dashboard/my-schedule")} className="flex items-center gap-2 rounded-xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm font-semibold text-violet-700 transition hover:bg-violet-100 dark:border-violet-500/30 dark:bg-violet-500/10 dark:text-violet-300 dark:hover:bg-violet-500/20">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+          My Schedule
+        </button>
+      </div>
+
+      {/* Tabs */}
+      <div className="mt-6 flex gap-2">
+        {(["upcoming", "registered", "completed"] as const).map((t) => (
+          <button
+            key={t}
+            type="button"
+            onClick={() => setTab(t)}
+            className={`rounded-lg px-3.5 py-1.5 text-sm font-medium transition ${
+              tab === t
+                ? "bg-indigo-600 text-white shadow-sm"
+                : "bg-white text-zinc-600 hover:bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+            }`}
+          >
+            {t === "registered" ? "My Events" : t.charAt(0).toUpperCase() + t.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      {/* Event cards */}
+      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {displayEvents.map((evt) => {
+          const reg = registrations.find((r) => r.eventId === evt.id);
+          return (
+            <div key={evt.id} className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
+              <div className={`relative h-32 bg-gradient-to-br ${evt.image}`}>
+                <div className="absolute inset-0 bg-black/10" />
+                <span className={`absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${statusColors[evt.status]}`}>
+                  <span className={`h-1.5 w-1.5 rounded-full ${statusDot[evt.status]}`} />
+                  {evt.status.charAt(0).toUpperCase() + evt.status.slice(1)}
+                </span>
+                {reg && (
+                  <span className={`absolute right-3 top-3 rounded-full px-2.5 py-1 text-xs font-semibold ${registrationStatusBadge[reg.status]}`}>
+                    {reg.status.replace("_", " ").charAt(0).toUpperCase() + reg.status.replace("_", " ").slice(1)}
+                  </span>
+                )}
+                {/* Share link icon */}
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); handleShareLink(evt.id); }}
+                  className="absolute bottom-3 right-3 rounded-lg bg-white/90 p-1.5 text-zinc-700 shadow-sm opacity-0 transition hover:bg-white group-hover:opacity-100"
+                  aria-label="Copy event link"
+                  title="Share event link"
+                >
+                  {copiedId === evt.id ? (
+                    <svg className="h-4 w-4 text-emerald-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
+                  ) : (
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg>
+                  )}
+                </button>
+              </div>
+
+              <div className="p-4">
+                <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-50">{evt.title}</h3>
+                <p className="mt-1 line-clamp-2 text-sm text-zinc-500 dark:text-zinc-400">{evt.description}</p>
+                <div className="mt-3 flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
+                  {evt.venue}, {evt.city}
+                </div>
+                <div className="mt-1 flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
+                  {new Date(evt.startDate).toLocaleDateString("en-GB", { day: "numeric", month: "short" })} – {new Date(evt.endDate).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                </div>
+
+                <div className="mt-4 flex items-center justify-between border-t border-zinc-100 pt-3 dark:border-zinc-800">
+                  <MetricPill label="Exhibitors" value={evt.exhibitors} />
+                  <MetricPill label="Visitors" value={evt.visitors.toLocaleString()} />
+                  <MetricPill label="Booths" value={evt.booths} />
+                </div>
+
+                <div className="mt-4">
+                  {reg ? (
+                    <div className="flex gap-2">
+                      <button type="button" onClick={() => router.push(`/dashboard/events/${evt.id}`)} className="flex-1 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700">
+                        Explore Event
+                      </button>
+                      <button type="button" onClick={() => router.push("/dashboard/my-badges")} className="rounded-lg border border-zinc-300 px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800" title="View e-badge">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" /></svg>
+                      </button>
+                    </div>
+                  ) : (
+                    <button type="button" onClick={() => handleRegister(evt.id)} className="w-full rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">
+                      Register for Event
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {displayEvents.length === 0 && (
+        <div className="mt-12 text-center">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+            {tab === "upcoming" ? "No new events to discover. Check back soon!" : tab === "registered" ? "You haven't registered for any upcoming events yet." : "No completed events yet."}
+          </p>
+        </div>
       )}
     </div>
   );
