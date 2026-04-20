@@ -186,7 +186,7 @@ export const mockUsers: MockUser[] = [
   { id: "U-002", name: "Priya Sharma", email: "priya@organiser.com", password: "etti", roles: ["organiser"], role: "organiser", avatar: "PS", company: "Nexa Systems" },
   { id: "U-003", name: "Alex Walker", email: "alex@exhibitor.com", password: "etti", roles: ["exhibitor"], role: "exhibitor", avatar: "AW" },
   { id: "U-004", name: "Raam Kumar", email: "raam@visitor.com", password: "etti", roles: ["visitor"], role: "visitor", avatar: "RK", company: "VoltGrid" },
-  { id: "U-005", name: "Raj Patel", email: "raj@vendor.com", password: "etti", roles: ["vendor"], role: "vendor", avatar: "RP", company: "BlueForge" },
+  { id: "U-005", name: "Fingoh Admin", email: "admin@fingoh.ai", password: "etti", roles: ["organiser", "exhibitor", "visitor"], role: "vendor", avatar: "FI", company: "Fingoh AI" },
 ];
 
 /* ─── Mock Events ─── */
