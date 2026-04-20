@@ -15,16 +15,21 @@ const themeInitScript = `(() => {
   } catch {}
 })();`;
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://ettiexpo.com";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://fingoh.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "EttiExpo | B2B Trade Fair & Exhibition Platform",
-    template: "%s | EttiExpo",
+    default: "Fingoh | B2B Trade Fair & Exhibition Platform",
+    template: "%s | Fingoh",
   },
-  description: "EttiExpo is a trade fair organiser platform where exhibitors, visitors, sponsors and vendors collaborate to run world-class B2B exhibitions and trade fairs.",
+  description: "Fingoh is a trade fair organiser platform where exhibitors, visitors, sponsors and vendors collaborate to run world-class B2B exhibitions and trade fairs.",
   keywords: ["trade fair", "B2B exhibitions", "trade fair organiser", "booth booking", "exhibition platform", "expo SaaS", "event management"],
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({

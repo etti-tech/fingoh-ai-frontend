@@ -3,8 +3,8 @@
 import { useState } from "react";
 
 export default function SettingsPage() {
-  const [orgName, setOrgName] = useState("Etti Technologies");
-  const [website, setWebsite] = useState("https://ettiexpo.com");
+  const [orgName, setOrgName] = useState("Fingoh Technologies");
+  const [website, setWebsite] = useState("https://fingoh.com");
   const [timezone, setTimezone] = useState("Asia/Kolkata");
   const [currency, setCurrency] = useState("USD");
   const [saved, setSaved] = useState(false);

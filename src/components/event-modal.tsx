@@ -27,7 +27,7 @@ export default function EventModal({ open, onClose, onSave, event }: EventModalP
   const backdropRef = useRef<HTMLDivElement>(null);
   const isEdit = !!event;
 
-  const [form, setForm] = useState({
+  const defaultForm = {
     title: "",
     description: "",
     venue: "",
@@ -36,11 +36,12 @@ export default function EventModal({ open, onClose, onSave, event }: EventModalP
     endDate: "",
     status: "draft" as MockEvent["status"],
     booths: 0,
-  });
+  };
 
-  useEffect(() => {
-    if (open && event) {
-      setForm({
+  const [form, setForm] = useState(defaultForm);
+
+  const formForOpen = open && event
+    ? {
         title: event.title,
         description: event.description,
         venue: event.venue,
@@ -49,11 +50,19 @@ export default function EventModal({ open, onClose, onSave, event }: EventModalP
         endDate: event.endDate,
         status: event.status,
         booths: event.booths,
-      });
-    } else if (open) {
-      setForm({ title: "", description: "", venue: "", city: "", startDate: "", endDate: "", status: "draft", booths: 0 });
+      }
+    : open
+      ? defaultForm
+      : null;
+
+  const formKey = formForOpen ? JSON.stringify(formForOpen) : "";
+
+  useEffect(() => {
+    if (formForOpen) {
+      setForm(formForOpen);
     }
-  }, [open, event]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formKey]);
 
   useEffect(() => {
     if (!open) return;

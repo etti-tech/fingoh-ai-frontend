@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -66,9 +67,11 @@ export default function DashboardSidebar() {
   const sidebar = (
     <div className="flex h-full flex-col">
       {/* Logo */}
-      <div className="flex items-center gap-2 px-5 py-5">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-sm font-extrabold text-white">E</span>
-        <span className="text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-50">EttiExpo</span>
+      <div className="px-5 py-5">
+        <Link href="/" aria-label="Fingoh home">
+          <Image src="/logo.png" alt="Fingoh" width={130} height={36} priority className="h-9 w-auto dark:hidden" />
+          <Image src="/logo-white.png" alt="Fingoh" width={130} height={36} priority className="hidden h-9 w-auto dark:block" />
+        </Link>
       </div>
 
       {/* User card */}

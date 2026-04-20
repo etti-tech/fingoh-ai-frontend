@@ -22,7 +22,6 @@ export default function ProductsPage() {
   const [showAdd, setShowAdd] = useState(false);
   const [newProduct, setNewProduct] = useState({ name: "", category: "", description: "", eventId: "" });
 
-  const userEvents = [...new Set(products.map((p) => p.eventId))];
   const allEvents = mockEvents.filter((e) => e.status === "upcoming" || e.status === "live");
 
   const handleAdd = (e: React.FormEvent) => {

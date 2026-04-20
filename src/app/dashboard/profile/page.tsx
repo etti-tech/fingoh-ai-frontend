@@ -47,7 +47,7 @@ export default function ProfilePage() {
       return;
     }
     // Mock update – in real app this would call an API
-    user.password = newPw;
+    updateProfile(user.name, user.company);
     setCurrentPw("");
     setNewPw("");
     setConfirmPw("");

@@ -8,9 +8,9 @@ export default function Footer() {
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
           <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
             <span className="flex h-7 w-7 items-center justify-center rounded-md bg-indigo-600 text-xs font-extrabold text-white">
-              E
+              F
             </span>
-            EttiExpo
+            Fingoh
           </Link>
 
           <nav className="flex flex-wrap gap-6 text-sm text-zinc-500 dark:text-zinc-400">
@@ -34,7 +34,7 @@ export default function Footer() {
 
         {/* Bottom row – copyright */}
         <p className="text-center text-xs text-zinc-400 dark:text-zinc-500">
-          &copy; {new Date().getFullYear()} EttiExpo. All rights reserved.
+          &copy; {new Date().getFullYear()} Fingoh. All rights reserved.
         </p>
       </div>
     </footer>
