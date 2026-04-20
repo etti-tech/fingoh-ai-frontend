@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 
 import { features, heroStats, roleFeatures, testimonials } from "@/data/mock-data";
@@ -6,9 +5,9 @@ import { CheckIcon, roleIconMap } from "@/components/icons";
 import AuthButtons from "@/components/auth-buttons";
 
 export const metadata: Metadata = {
-  title: "EttiExpo \u2014 B2B Trade Fair & Exhibition Platform",
+  title: "Fingoh — B2B Trade Fair & Exhibition Platform",
   description:
-    "EttiExpo is a trade fair organiser platform where exhibitors, visitors, sponsors and vendors collaborate to run world-class B2B exhibitions and trade fairs.",
+    "Fingoh is a trade fair organiser platform where exhibitors, visitors, sponsors and vendors collaborate to run world-class B2B exhibitions and trade fairs.",
 };
 
 export default function Home() {
@@ -26,7 +25,7 @@ export default function Home() {
           One Platform. Every Stakeholder. World-Class Trade Fairs.
         </h1>
         <p className="relative mx-auto mt-6 max-w-2xl text-lg text-indigo-100 dark:text-indigo-200 sm:text-xl">
-          EttiExpo is a B2B trade fair organiser platform that brings exhibitors,
+          Fingoh is a B2B trade fair organiser platform that brings exhibitors,
           visitors, sponsors and vendors together &mdash; from fair creation to
           QR check-in, booth booking to sponsor payments.
         </p>
@@ -142,16 +141,6 @@ export default function Home() {
             </article>
           ))}
         </div>
-      </section>
-
-      {/* CTA banner */}
-      <section className="rounded-3xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-16 text-center text-white shadow-xl dark:from-indigo-800 dark:to-purple-900 sm:px-12">
-        <h2 className="text-3xl font-bold sm:text-4xl">Ready to elevate your next trade fair?</h2>
-        <p className="mx-auto mt-4 max-w-xl text-indigo-100 dark:text-indigo-200">
-          Get started in minutes &mdash; no credit card required. See how EttiExpo
-          can transform your trade fairs and exhibitions.
-        </p>
-        <AuthButtons variant="cta" />
       </section>
     </div>
   );

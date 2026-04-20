@@ -39,6 +39,7 @@ const positionMultiplier: Record<BoothPosition, number> = {
 
 export default function BoothBookingModal({ open, onClose, onSubmit, eventId, userId }: BoothBookingModalProps) {
   const backdropRef = useRef<HTMLDivElement>(null);
+  const idCounterRef = useRef(0);
 
   const [form, setForm] = useState({
     boothStyle: "shell_scheme" as BoothStyle,
@@ -47,12 +48,6 @@ export default function BoothBookingModal({ open, onClose, onSubmit, eventId, us
     hallPreference: "Hall 1",
     specialRequirements: "",
   });
-
-  useEffect(() => {
-    if (open) {
-      setForm({ boothStyle: "shell_scheme", boothPosition: "middle", sqMeters: 12, hallPreference: "Hall 1", specialRequirements: "" });
-    }
-  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -69,15 +64,16 @@ export default function BoothBookingModal({ open, onClose, onSubmit, eventId, us
 
   const handleBackdropClick = useCallback(
     (e: React.MouseEvent) => { if (e.target === backdropRef.current) onClose(); },
-    [onClose],
+    [onClose, backdropRef],
   );
 
   const totalPrice = Math.round(form.sqMeters * pricePerSqMeter[form.boothStyle] * positionMultiplier[form.boothPosition]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    idCounterRef.current += 1;
     const booking: ExhibitorBooking = {
-      id: `BK-${Date.now()}`,
+      id: `BK-${idCounterRef.current}`,
       userId,
       eventId,
       boothStyle: form.boothStyle,

@@ -11,11 +11,6 @@ export default function EnquiryModal({ open, onClose }: EnquiryModalProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const backdropRef = useRef<HTMLDivElement>(null);
 
-  // Reset on reopen
-  useEffect(() => {
-    if (open) setIsSubmitted(false);
-  }, [open]);
-
   // Close on Escape
   useEffect(() => {
     if (!open) return;
@@ -77,9 +72,9 @@ export default function EnquiryModal({ open, onClose }: EnquiryModalProps) {
         {/* Logo */}
         <div className="flex items-center justify-center gap-2">
           <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600 text-sm font-extrabold text-white">
-            E
+            F
           </span>
-          <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">EttiExpo</span>
+          <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">Fingoh</span>
         </div>
 
         <h2 className="mt-6 text-center text-xl font-bold text-zinc-900 dark:text-zinc-50">
