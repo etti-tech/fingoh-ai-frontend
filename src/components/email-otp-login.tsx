@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { useAuth } from "./auth-context";
+import { mockUsers } from "@/data/mock-data";
 
 export default function EmailOtpLogin() {
   const router = useRouter();
@@ -14,6 +15,12 @@ export default function EmailOtpLogin() {
   const [otpSent, setOtpSent] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [shake, setShake] = useState(false);
+
+  const triggerShake = () => {
+    setShake(true);
+    setTimeout(() => setShake(false), 500);
+  };
 
   const handleSendOtp = () => {
     const normalizedEmail = email.trim();
@@ -21,6 +28,18 @@ export default function EmailOtpLogin() {
     if (!/\S+@\S+\.\S+/.test(normalizedEmail)) {
       setError("Enter a valid email address.");
       setMessage(null);
+      triggerShake();
+      return;
+    }
+
+    const userExists = mockUsers.some(
+      (u) => u.email.toLowerCase() === normalizedEmail.toLowerCase()
+    );
+
+    if (!userExists) {
+      setError("No account found with this email address.");
+      setMessage(null);
+      triggerShake();
       return;
     }
 
@@ -43,7 +62,7 @@ export default function EmailOtpLogin() {
   };
 
   return (
-    <div className="mx-auto max-w-md rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+    <div className={`mx-auto max-w-md rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900${shake ? " animate-shake" : ""}`}>
       <div className="text-center">
         <h1 className="mt-2 font-bold text-xl text-zinc-600 dark:text-zinc-300">
           Sign in to your account
